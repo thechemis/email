@@ -280,15 +280,18 @@ func (e *Email) Attach(r io.Reader, filename string, c string) (a *Attachment, e
 // It attempts to open the file referenced by filename and, if successful, creates an Attachment.
 // This Attachment is then appended to the slice of Email.Attachments.
 // The function will then return the Attachment for reference, as well as nil for the error, if successful.
-func (e *Email) AttachFile(filename string) (a *Attachment, err error) {
-	f, err := os.Open(filename)
+func (e *Email) AttachFile(path, name string) (a *Attachment, err error) {
+	f, err := os.Open(path)
 	if err != nil {
 		return
 	}
 	defer f.Close()
 
-	ct := mime.TypeByExtension(filepath.Ext(filename))
-	basename := filepath.Base(filename)
+	ct := mime.TypeByExtension(filepath.Ext(path))
+	basename := filepath.Base(path)
+	if name != "" {
+		basename = name
+	}
 	return e.Attach(f, basename, ct)
 }
 

@@ -742,7 +742,7 @@ func ExampleGmail() {
 
 func ExampleAttach() {
 	e := NewEmail()
-	e.AttachFile("test.txt")
+	e.AttachFile("test.txt", "test")
 }
 
 func Test_base64Wrap(t *testing.T) {
